@@ -67,8 +67,9 @@ EOF
   end
 
   # desc '[internal] Touches up the released code.'
+  desc "Changing permissions on WP files"
   task :finalize_update, :except => { :no_release => true } do
-    run "chmod -R g+w #{release_path}"
+    run "chmod -R g-w #{release_path}"
     run "chmod 644 #{release_path}/#{app_root}/wp-config.php"
   end
 
@@ -111,7 +112,7 @@ namespace :db do
       temp = "/tmp/#{release_name}_#{application}_#{filename}"
       run "touch #{temp} && chmod 600 #{temp}"
       run_locally "mkdir -p db"
-      run "cd #{deploy_to}/current/webroot && #{wp} db export --file=#{temp} && cd -"
+      run "cd #{deploy_to}/current/webroot && #{wp} db export #{temp} && cd -"
       download("#{temp}", "db/#{filename}", :via=> :scp)
       search = "#{application}-#{stage}.example.com"
       replace = local_domain
@@ -125,7 +126,7 @@ namespace :db do
   task :pull, :roles => :db, :only => { :primary => true } do
     domains.each do |domain|
       filename = "#{domain}_#{stage}.sql"
-      system "cd #{app_root} ; #{wp} db import --file=#{filename}"
+      system "cd #{app_root} ; #{wp} db import #{filename}"
     end
   end
 
