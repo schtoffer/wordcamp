@@ -1,5 +1,5 @@
 # Set the deployment directory on the target hosts.
-set :deploy_to, "/var/www/sites/virtual/#{application}-#{stage}"
+set :deploy_to, "/home/username/sites/#{application}-#{stage}"
 
 # The hostnames to deploy to.
 role :web, "#{application}-#{stage}.example.com"
@@ -12,4 +12,4 @@ role :db, "#{application}-#{stage}.example.com", :primary => true
 set :wp, "cd #{current_path}/#{app_root} ; /usr/bin/wp"
 
 # The username on the target system, if different from your local username
-ssh_options[:user] = 'deploy'
+ssh_options[:user] = 'username'
