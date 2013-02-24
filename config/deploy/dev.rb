@@ -2,7 +2,7 @@
 set :deploy_to, "/home/krondaco/sites/#{application}-#{stage}"
 
 # Use the correct branch on github. Uncomment this if you have set up seperate branches for each staging area
-# set :branch, "dev"
+set :branch, "test"
 
 # The hostnames to deploy to.
 role :web, "kronda.com"
