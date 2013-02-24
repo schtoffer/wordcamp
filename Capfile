@@ -70,7 +70,7 @@ EOF
   desc "Changing permissions on WP files"
   task :finalize_update, :except => { :no_release => true } do
     #run "chmod -R g-w #{release_path}"
-    run "chmod -R g-w #{deploy_to}/releases"
+    run "chmod -R g-w #{deploy_to}"
     run "chmod 644 #{release_path}/#{app_root}/wp-config.php"
   end
 
