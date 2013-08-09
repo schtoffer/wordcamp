@@ -39,4 +39,8 @@ set :httpd_group, 'apache'
 
 
 #set this to where you have installed your wp site locally (http://[local_domain]/wp-admin/ should exist. )
+<<<<<<< HEAD
 set :local_domain, 'localhost.com' #FIXME
+=======
+set :local_domain, 'local.domain.com'
+>>>>>>> 4201a433b092ad8658bc1e117f1b2ba6fdc2c0ad

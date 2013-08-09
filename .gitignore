@@ -1,3 +1,16 @@
+*~
+.DS_Store
+.buildpath
+.project
+.settings
+*.sass-cache/
+*.sublime*
+db/
+docs/
+backups/
+webroot/
+wordpress/.htaccess
+wordpress/wp-content/themes/*/compass_app_log.txt
 wordpress/wp-content/uploads
 wordpress/wp-content/w3tc
 wordpress/wp-content/avatars
@@ -11,3 +24,5 @@ docs/
 *~
 .DS_Store
 /.gitattributes
+wordpress/wp-content/debug.log
+
