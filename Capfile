@@ -112,9 +112,16 @@ namespace :db do
       temp = "/tmp/#{release_name}_#{application}_#{filename}"
       run "touch #{temp} && chmod 600 #{temp}"
       run_locally "mkdir -p db"
-      run "cd #{deploy_to}/current/webroot && #{wp} db export #{temp} && cd -"
+      # For my server I have to source my bash_profile to get the wp command to work. On other hosts, this might not be necessary, so you can uncomment the line below and commemt out or delete the second version. Otherwise just keep the original line and edit the /path-to/.bash_profile
+      #FIXME
+      # run cd #{deploy_to}/current/webroot && #{wp} db export #{temp} && cd -"
+      run "source /path-to/.bash_profile && cd #{deploy_to}/current/webroot && #{wp} db export #{temp} && cd -"
       download("#{temp}", "db/#{filename}", :via=> :scp)
-      search = "#{application}-#{stage}.example.com"
+      if "#{stage}" == "prod"
+        search = "yourdomain.com" #FIXME
+      else
+        search = "#{application}-#{stage}.yourdomain.com" #FIXME
+      end
       replace = local_domain
       puts "searching (#{search}) and replacing (#{replace}) domain information"
       run_locally "sed -e 's/#{search}/#{replace}/g' -i .bak db/#{filename}"
@@ -136,12 +143,16 @@ namespace :db do
       filename = "#{domain}_#{stage}.sql"
       temp = "/tmp/#{release_name}_#{application}_#{filename}"
       run "touch #{temp} && chmod 600 #{temp}"
-      replace = "#{application}-#{stage}.example.com"
+      if "#{stage}" == "prod"
+        replace = "yourdomain.com" #FIXME
+      else
+        replace = "#{application}-#{stage}.yourdomain.com" #FIXME
+      end
       search = local_domain
       puts "searching (#{search}) and replacing (#{replace}) domain information"
       run_locally "sed -e 's/#{search}/#{replace}/g' -i .bak db/#{filename}"
       upload("db/#{filename}", "#{temp}", :via=> :scp)
-      run "cd #{deploy_to}/current/webroot/ && #{wp} db import --file=#{temp}"
+      run "cd #{deploy_to}/current/webroot/ && #{wp} db import #{temp}"
       run "rm #{temp}"
     end
   end
